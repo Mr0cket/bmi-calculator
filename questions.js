@@ -25,8 +25,8 @@ const askHeight = () => {
     return new Promise((resolve, reject) => readline.question('What is your height?(m): ', (ans) => {
         if(isNaN(Number(ans)) || ans.length < 1) {
             reject( `You didn't Enter a valid height`)
-        } else if (ans > 100) {
-        console.log(`converting Height in CM => M`)
+        } else if (ans > 100) {// can assume input height in cm
+        console.log(`converting Height CM => M`)
         resolve(ans/100)
         } else resolve(ans)
         })

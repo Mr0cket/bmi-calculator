@@ -14,9 +14,8 @@ const retry = require('./PromiseRetry')
 // fs.
 
 async function bmiCalculator(){
-    let existingUser;
     const name = await retry(questions.askName)
-    users.forEach( user => {if (user.name === name) existingUser = user} )
+    let existingUser = users.find( user =>  user.name === name ? true : false)
     if (existingUser) {
         console.log(`
         Wecome Back, ${existingUser.name}.
