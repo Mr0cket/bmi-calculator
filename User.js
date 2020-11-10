@@ -13,5 +13,4 @@ module.exports = class User {
         this.dietType = this.bmi <= 22.5 ? 'gain' : 'lose';
         this.deltaWght = Math.abs(this.idealWeight - this.weight)
     }
-
 }

@@ -16,30 +16,26 @@ const retry = require('./PromiseRetry')
 async function bmiCalculator(){
     let existingUser;
     const name = await retry(questions.askName)
-    users.forEach(user => {if (user.name === name) existingUser = user} )
+    users.forEach( user => {if (user.name === name) existingUser = user} )
     if (existingUser) {
         console.log(`
         Wecome Back, ${existingUser.name}.
-        Here are your Results:`)
-        readline.close()
-        showResults(existingUser)
-        
+        Here are your Results:
+        `)
+        showResults(existingUser)  
     } else {
-    console.log(`hello ${name}`)
-    const weight = await retry(questions.askWeight)
-    const height = await retry(questions.askHeight)
-    const age = await retry(questions.askAge)
-    const exercisesDaily = await retry(questions.askExercise)
-    const isMale = await retry(questions.askGender)
-    const user = new User(name, height, weight, age, isMale, exercisesDaily)
-
+    const user = new User(name, 
+        await retry(questions.askHeight), 
+        await retry(questions.askWeight), 
+        await retry(questions.askAge), 
+        await retry(questions.askGender), 
+        await retry(questions.askExercise))
     showResults(user)
 
     users.push(user)
 
     saveResults(users)
     }
-    
 }
 
 function timelyGreeting() {
@@ -84,4 +80,6 @@ function showResults(usr) {
 function saveResults(usrs) {
     fs.writeFile(`./users.json`, JSON.stringify(usrs), () => console.log(`New json entry created from ${usrs}`))
 }
+
+// execute the main function:
 bmiCalculator()

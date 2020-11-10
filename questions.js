@@ -60,9 +60,6 @@ function askExercise() {
     }))
 }
 
-
-
-
 exports.askName = askName
 exports.askAge = askAge
 exports.askHeight = askHeight
