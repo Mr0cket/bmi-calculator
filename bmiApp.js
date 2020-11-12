@@ -1,6 +1,6 @@
 const fs = require('fs');
 const users = fs.existsSync('users.json') && require('./users.json') || []
-const questions = require('./questions') // import quesitons module containing all the questions!
+const questions = require('./questions') // import questions module containing all the asynchronous question Functions
 const User = require('./User')
 const retry = require('./PromiseRetry')
 // --Business Logic--
@@ -42,7 +42,6 @@ function timelyGreeting() {
     const timeofDay =  `Good ${hoursOfDay < 12 ? 'morning' : hoursOfDay < 18 ? 'afternoon' : 'evening'}`
     return timeofDay;
 }
-
 function showResults(usr) {
     console.log(`
             **************

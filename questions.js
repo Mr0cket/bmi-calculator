@@ -3,14 +3,15 @@ const readline = require('readline').createInterface({
     output: process.stdout
 })
 
-const askName = () => {
+exports.askName = function askName() {
     return new Promise((resolve, reject) => readline.question('What is your Name?: ', (ans) => {
         if(ans.length < 1) reject(`Enter a valid name`)
+        if(//)
         resolve(ans)
     }))
 }
 
-const askWeight = () => {
+exports.askWeight = function askWeight() {
     return new Promise((resolve, reject) => readline.question('What is your Weight?(kg): ', (ans) => {
     if (isNaN(Number(ans)) || ans.length < 1) {
         reject('You didnt enter a valid weight')
@@ -21,19 +22,23 @@ const askWeight = () => {
     })
 )}
 
-const askHeight = () => {
+exports.askHeight = function askHeight() {
     return new Promise((resolve, reject) => readline.question('What is your height?(m): ', (ans) => {
         if(isNaN(Number(ans)) || ans.length < 1) {
             reject( `You didn't Enter a valid height`)
         } else if (ans > 100) {// can assume input height in cm
         console.log(`converting Height CM => M`)
         resolve(ans/100)
-        } else resolve(ans)
+        } else if ( ans > 2 ) {
+            reject(`This app currently doesn't support trees or skyscrapers.
+            Please go back to being stuck in the ground`)
+        }
+        resolve(ans)
         })
     )
 }
 
-const askAge = () => {
+exports.askAge = function askAge() {
     return new Promise((resolve, reject) => readline.question('How old are you?(years): ', ans => {
         let parsedAns = parseFloat(ans)
         if (isNaN(parsedAns) || ans.length < 1) {
@@ -43,7 +48,7 @@ const askAge = () => {
     }))
 }
 
-const askGender = () => {
+exports.askGender = function askGender() {
     return new Promise((res, rej) => readline.question('Do you identify as male?(y/n)', ans => {
         if (!/^y?e?s?$|^n?o*$/i.test(ans)) {
             rej('sorry, can you please answer either "yes" or "no"')
@@ -52,18 +57,11 @@ const askGender = () => {
     )
 }
 
-function askExercise() {
+exports.askExercise = function askExercise() {
     return new Promise((res, rej) => readline.question('Do you exercise Daily?(y/n) ', ans => {
         if (!/^ye?s?$|^no?$/i.test(ans)) {
-            rej('sorry, can you please answer either "yes" or "no"')
+            rej('sorry, can you please answer either "yes" or "no"');
         } else res( /^y\w*/i.test(ans)) // Boolean
     }))
 }
-
-exports.askName = askName
-exports.askAge = askAge
-exports.askHeight = askHeight
-exports.askWeight = askWeight
-exports.askGender = askGender
-exports.askExercise = askExercise
 exports.close = readline.close
